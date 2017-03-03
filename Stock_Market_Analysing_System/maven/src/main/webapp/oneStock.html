@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="picture/shorticon.png" type="image/x-icon" />
+    <title>Shrewd-Investments:OneStock</title>
+	<link href="CSS/Searchbar.css" rel="stylesheet">
+    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="CSS/modelCSS/nav.css" rel="stylesheet">
+	<link href="CSS/button.css" rel="stylesheet">
+    <script src="JS/jquery.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    <script src="JS/echarts.min.js"></script>
+    <!-- table -->
+    <link href="CSS/nowlisttable.css" rel="stylesheet">
+    <!-- table -->
+<style type="text/css">
+.leftpanel{
+	height:37%;
+	width:100%;
+	float:left;
+	
+}
+.leftp{
+    height: 24%;
+    width:100%;
+    float:left;
+}
+#left{
+	height:100%;
+	width:20%;
+	float:left;
+	
+}
+#right{
+	height:100%;
+	width:20%;
+	float:left;
+	
+}
+.nowData{
+	height:47%;
+	width:100%;
+	float:left;
+}
+#bu{
+	height: 4%;
+	width: 50%;
+	float: left;
+}
+#StockK{
+	width:100%;
+	height:100%;
+	float:left;
+
+}
+
+#StockBar{
+	width:100%;
+	height:100%;
+	float:left;
+
+}
+#sandiantu{
+    width:100%;
+    height:100%;
+    float:left;
+}
+/*主面板样式*/
+#container { 
+        width:1903px; 
+        margin:0 auto;/*主面板DIV居中*/
+}
+
+    /*中间部分面板样式*/
+#main {
+        width:100%;
+        height:1200px;
+        /*border:1px #F00 solid;*/   /*在周围显示一圈红色的线*/
+}
+#middle{
+	width:60%;
+	height:33.3%;
+	float:left;
+}
+.zhibiaochart{
+	position: relative;
+	left: -15px;
+	width:380px;
+	height: 370px;
+}
+#zhangdiefu{
+	position: relative;
+	left: -15px;
+	width:380px;
+	height: 420px;
+ }
+</style>
+</head>
+<body background="picture/bj.jpg" style="position:absolute; top:0; left:0; height:100%;width:100%;background-repeat:no-repeat;background-attachment:fixed; 
+background-size: cover; " onload="wudangdata();shishidata();qianjingdata();loadzixuangu();">
+  
+<div id="container">
+	<div id="header">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="home.html" style="font-size:20px">Shrewd-Investments</a></li>
+                    <li><a href="NowList.html" style="font-size:20px">Nowlist</a></li>
+					<li><a href="hyAnalyze.html" style="font-size:20px">Analyze</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">Recomment<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="recommentsha.html">For Shanghai A</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentshb.html">For Shanghai B</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentsza.html">For Shenzhen A</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentszb.html">For Shenzhen B</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">About<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a data-toggle="modal"
+								   data-target="#AboutOne">About Us</a></li>
+							<li class="divider"></li>
+							<li><a data-toggle="modal"
+								   data-target="#AboutTwo">Contact Us</a></li>
+						</ul>
+					</li>
+					<li><a href="home.html" style="font-size:20px">to be continued</a></li>
+				</ul>
+				<ul class="nav navbar-nav" style="float: right;font-size:20px;height: 50px;">
+					<li>
+						<div id="scbar_background">
+							<form>
+								<input type="text" id="scbar_text" placeholder="搜索您想要的股票或指数代码">
+								<input type="submit" id="scbar_button" value=" ">
+							</form>
+						</div>
+					</li>
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size:20px"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="userServlet"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+							<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
+							<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</nav>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="AboutOne" tabindex="-1" role="dialog"
+			 aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close"
+								data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h3><strong class="modal-title" style="font-size:20px">About Us</strong></h3>
+					</div>
+					<div class="modal-body">
+						<p style="text-indent:2em;font-size:20px;">Shrewd-Investments Company是一家致力于提供金融信息综合服务的有限公司（筹备）。
+							公司在计算机和互联网科技不断发展的背景下，立足快速发展的中国金融市场，通过持续的产品创新和技术创新，凭借权威、全面、专业、及时的优势，正蓬勃发展。在开拓中国市场的同时，积极实施国际化发展战略，
+							以期成为在世界范围内具有影响力的金融信息综合服务提供商。
+						</p>
+					</div>
+				</div><!-- /.modal-content -->
+			</div>
+		</div>
+		<!-- /.modal -->
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="AboutTwo" tabindex="-1" role="dialog"
+			 aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close"
+								data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h3><strong class="modal-title" style="font-size:20px">Contact Us</strong></h3>
+					</div>
+					<div class="modal-body" style="font-size:20px">
+						<address>
+							<strong>Shrewd-Investments Company, Inc.</strong><br>
+							No. 22,Hankou Road, Nanjing City.
+						</address>
+						<address>
+							<strong>NanJing University · Software Instityte</strong><br>
+							<a href="mailto:#">software@mail.nju.edu.cn</a>
+						</address>
+					</div>
+				</div><!-- /.modal-content -->
+			</div>
+		</div>
+		<!-- /.modal -->
+<br>
+<br>
+<br>
+	</div>
+	
+	<div id="main">
+		 
+		<div id="left">
+		
+			<div class="panel panel-default leftp">
+				<div class="panel-heading">
+					<h3 class="panel-title">前景预测</h3>
+				</div>
+				<div class="panel-body " id="qianjingyuce">
+				</div>
+			</div>
+            <div class="panel panel-default leftpanel">
+                <div class="panel-body">
+					<ul id="zhibiaolist" class="nav nav-tabs">
+						<li><a href="#ATRchart" onclick="">ATR</a>
+						</li>
+						<li><a href="#MACDchart" onclick="">MACD</a>
+						</li>
+						<li><a href="#KDJchart" onclick="">KDJ</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane zhibiaochart" id="ATRchart"></div>
+						<div class="tab-pane zhibiaochart" id="MACDchart"></div>
+						<div class="tab-pane zhibiaochart" id="KDJchart"></div>
+					</div>
+					<script>
+						$(function () {
+							$('#zhibiaolist a:first').tab('show');//初始化显示哪个tab
+							$('#zhibiaolist a').click(function (e) {
+								e.preventDefault();//阻止a链接的跳转行为
+								$(this).tab('show');//显示当前选中的链接及关联的content
+							})
+						})
+					</script>
+                </div>
+            </div>
+			<div class="panel panel-default leftpanel">
+				<div class="panel-body">
+					<div id="zhangdiefu"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="middle">
+			<div id="StockK"></div>
+			<div id="StockBar"></div>
+            <div id="sandiantu"></div>
+		</div>
+		
+		
+		<div id="right">
+			<button id="bu" class="myButton" onclick="clickzixuangu();"></button>
+			<HR style="border:0 double #987cb9" width="80%" color=#987cb9 SIZE=3>
+			<table cellspacing="0" class="nowData" id="shishi">
+			</table>
+			<HR style="border:0 double #987cb9" width="80%" color=#987cb9 SIZE=3>
+			<table cellspacing="0" class="nowData" id="wudangpankou">
+			</table>
+
+		</div>
+		
+	</div>
+	<div id="footer">
+		<HR style="border:1px dashed #987cb9" width="80%" color=#987cb9  SIZE=1>
+		<div class="container pb-lg">
+					<div class="col-md-4">
+							<address style="font-size:20px">
+								  <strong>Shrewd-Investments Company, Inc.</strong><br>
+									 No. 22,Hankou Road, Nanjing City.
+							</address>
+					</div>
+					<div class="col-md-4" >
+							<address style="font-size:20px">
+									<strong>NanJing University · Software Instityte</strong><br>
+									<a href="mailto:#">software@mail.nju.edu.cn</a>
+							 </address>
+					</div>
+					<div class="col-md-4" >
+						<address style="font-size:20px">
+								<strong>Copyright@Shrewd-Investments 2016-2026</strong><br>
+						</address>
+					</div>
+		</div>
+	</div>
+</div>  
+
+
+<!-- 这里配置K线图的相关信息  -->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code":code, "type": "k"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			var myChart = echarts.init(document.getElementById('StockK'));
+			var getdata=[];
+			for (var i=0;i<data.length;i++){
+				var m=[];
+				m[0]=data[i].date;
+				m[1]=data[i].open;
+				m[2]=data[i].close;
+				m[3]=data[i].low;
+				m[4]=data[i].high;
+				getdata[i]=m;
+			}
+			// 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
+			var data0 = splitData(getdata);
+			function splitData(rawData) {
+				var categoryData = [];
+				var values = [];
+				for (var i = 0; i < rawData.length; i++) {
+					categoryData.push(rawData[i].splice(0, 1)[0]);
+					values.push(rawData[i])
+				}
+				return {
+					categoryData: categoryData,
+					values: values
+				};
+			}
+
+			function calculateMA(dayCount) {
+				var result = [];
+				for (var i = 0, len = data0.values.length; i < len; i++) {
+					if (i < dayCount) {
+						result.push('-');
+						continue;
+					}
+					var sum = 0;
+					for (var j = 0; j < dayCount; j++) {
+						sum += data0.values[i - j][1];
+					}
+					result.push(sum / dayCount);
+				}
+				return result;
+			}
+
+			var option = {
+				title: {
+					text: '股票k线图',
+					left: 0
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line'
+					}
+				},
+				legend: {
+					data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+				},
+				grid: {
+					left: '10%',
+					right: '10%',
+					bottom: '15%'
+				},
+				xAxis: {
+					type: 'category',
+					data: data0.categoryData,
+					scale: true,
+					boundaryGap : false,
+					axisLine: {onZero: false},
+					splitLine: {show: false},
+					splitNumber: 20,
+					min: 'dataMin',
+					max: 'dataMax'
+				},
+				yAxis: {
+					scale: true,
+					splitArea: {
+						show: true
+					}
+				},
+				dataZoom: [
+					{
+						type: 'inside',
+						start: 50,
+						end: 100
+					},
+					{
+						show: true,
+						type: 'slider',
+						y: '90%',
+						start: 50,
+						end: 100
+					}
+				],
+				series: [
+					{
+						name: '日K',
+						type: 'candlestick',
+						data: data0.values,
+						markPoint: {
+							label: {
+								normal: {
+									formatter: function (param) {
+										return param != null ? Math.round(param.value) : '';
+									}
+								}
+							},
+							data: [
+								{
+									name: 'XX标点',
+									coord: ['2013/5/31', 2300],
+									value: 2300,
+									itemStyle: {
+										normal: {color: 'rgb(41,60,85)'}
+									}
+								},
+								{
+									name: 'highest value',
+									type: 'max',
+									valueDim: 'highest'
+								},
+								{
+									name: 'lowest value',
+									type: 'min',
+									valueDim: 'lowest'
+								},
+								{
+									name: 'average value on close',
+									type: 'average',
+									valueDim: 'close'
+								}
+							],
+							tooltip: {
+								formatter: function (param) {
+									return param.name + '<br>' + (param.data.coord || '');
+								}
+							}
+						},
+						markLine: {
+							symbol: ['none', 'none'],
+							data: [
+								[
+									{
+										name: 'from lowest to highest',
+										type: 'min',
+										valueDim: 'lowest',
+										symbol: 'circle',
+										symbolSize: 10,
+										label: {
+											normal: {show: false},
+											emphasis: {show: false}
+										}
+									},
+									{
+										type: 'max',
+										valueDim: 'highest',
+										symbol: 'circle',
+										symbolSize: 10,
+										label: {
+											normal: {show: false},
+											emphasis: {show: false}
+										}
+									}
+								],
+								{
+									name: 'min line on close',
+									type: 'min',
+									valueDim: 'close'
+								},
+								{
+									name: 'max line on close',
+									type: 'max',
+									valueDim: 'close'
+								}
+							]
+						}
+					},
+					{
+						name: 'MA5',
+						type: 'line',
+						data: calculateMA(5),
+						smooth: true,
+						lineStyle: {
+							normal: {opacity: 0.5}
+						}
+					},
+					{
+						name: 'MA10',
+						type: 'line',
+						data: calculateMA(10),
+						smooth: true,
+						lineStyle: {
+							normal: {opacity: 0.5}
+						}
+					},
+					{
+						name: 'MA20',
+						type: 'line',
+						data: calculateMA(20),
+						smooth: true,
+						lineStyle: {
+							normal: {opacity: 0.5}
+						}
+					},
+					{
+						name: 'MA30',
+						type: 'line',
+						data: calculateMA(30),
+						smooth: true,
+						lineStyle: {
+							normal: {opacity: 0.5}
+						}
+					}
+
+				]
+			};
+
+			myChart.setOption(option);
+
+		}
+	});
+</script>
+<!--成交量图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "cheng"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			var myChart = echarts.init(document.getElementById('StockBar'));
+			//get JSON 数据
+			var getdata=[];
+			for (var i=0;i<data.length;i++){
+				var m=[];
+				m[0]=data[i].date;
+				m[1]=data[i].volume;
+				getdata[i]=m;
+			}
+			var option = {
+				title: {
+					text: '成交量'
+				},
+				tooltip : {
+					trigger: 'axis',
+					formatter : function (para) {
+						var value=para[0].value;
+						return "日期: "+value[0]+'<br/>'+
+								"成交量: "+value[1]+'<br/>'
+					}
+				},
+				legend: {
+					data:['成交量']
+				},
+				toolbox: {
+					show : true,
+					feature : {
+						mark : {show: true},
+						dataZoom : {show: true},
+						dataView : {show: true},
+						magicType : {show: true, type: ['line', 'bar']},
+						restore : {show: true},
+						saveAsImage : {show: true}
+					}
+				},
+				calculable : true,
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 20,
+					end : 80
+				},
+				xAxis : [
+					{
+						type : 'category',
+						boundaryGap : false,
+						data : function(){
+							var list=[];
+							for (var i=0;i<getdata.length;i++){
+								list.push(getdata[i][0])
+							}
+							return list
+						}()
+					}
+				],
+				yAxis : [
+					{
+						type : 'value',
+						axisLabel : {
+							formatter: '{value} 万手'
+						}
+					}
+				],
+				series : [
+					{
+						name:'成交量',
+						type:'line',
+						data:getdata,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					}
+				]
+			};
+			myChart.setOption(option);
+		}
+	});
+
+</script>
+<!--散点图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "san"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('sandiantu'));
+			var getopendata=[];
+			var getclosedata=[];
+			for (var i=0;i<data.length;i++){
+				var m=[];
+				var n=[];
+				m[0]=data[i].date;
+				m[1]=data[i].open;
+				n[0]=data[i].date;
+				n[1]=data[i].close;
+				getopendata[i]=m;
+				getclosedata[i]=n;
+			}
+			// 指定图表的配置项和数据
+			option = {
+				title : {
+					text : '价格开盘收盘散点分布',
+					subtext : '近期一个月'
+				},
+				tooltip : {
+					trigger: 'axis',
+					axisPointer:{
+						show: true,
+						type : 'cross',
+						lineStyle: {
+							type : 'dashed',
+							width : 1
+						}
+					}
+				},
+				toolbox: {
+					show : true,
+					feature : {
+						mark : {show: true},
+						dataView : {show: true, readOnly: false},
+						restore : {show: true},
+						saveAsImage : {show: true}
+					}
+				},
+				dataZoom: {
+					show: true,
+					start : 35,
+					end : 65
+				},
+				legend : {
+					data : ['开盘价', '收盘价']
+				},
+
+				xAxis : [
+					{
+						type : 'category',
+						data : function(){
+							var list=[];
+							for (var i=0;i<getclosedata.length;i++){
+								list.push(getclosedata[i][0])
+							}
+							return list
+						}()
+					}
+				],
+				yAxis : [
+					{
+						type : 'value',
+						axisLabel: {
+							formatter : function(v) {
+								return  v+"￥"
+							}
+						},
+						min:'dataMin'
+					}
+				],
+				animation: false,
+				series : [
+					{
+						name:'开盘价',
+						type:'scatter',
+						tooltip : {
+							trigger: 'item',
+							formatter : function (params) {
+								return params.seriesName + '<br/>'
+										+ '日期: '+params.value[0] + '<br/>'
+										+ '价格: '+params.value[1]
+							},
+							axisPointer:{
+								show: true
+							}
+						},
+						data: getopendata,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+					},
+					{
+						name:'收盘价',
+						type:'scatter',
+						tooltip : {
+							trigger: 'item',
+							formatter : function (params) {
+								return params.seriesName + '<br/>'
+										+ '日期: '+params.value[0] + '<br/>'
+										+ '价格: '+params.value[1]
+							},
+							axisPointer:{
+								show: true
+							}
+						},
+						data: getclosedata,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+					}
+				]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+	});
+
+</script>
+<!--增幅率图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "zeng"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('zhangdiefu'));
+			var getdate=[];
+			var getgegu=[];
+			var getdapan=[];
+			for (var i=0;i<data.length;i++){
+				getdate[i]=data[i].date;
+				getgegu[i]=data[i].stock;
+				getdapan[i]=data[i].market;
+			}
+			// 指定图表的配置项和数据
+			option = {
+				title: {
+					text: '涨跌幅走势对比'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['个股','大盘'],
+					left: '50%',
+					top:'2%'
+				},
+				grid: {
+					top:40,
+					left: '0%',
+					right: '10%',
+					bottom: '10%',
+					containLabel: true
+				},
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 20,
+					end : 80
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: getdate
+				},
+				yAxis: {
+					type: 'value',
+					axisLabel : {
+						formatter: '{value}%'
+					}
+				},
+				series: [
+					{
+						name:'个股',
+						type:'line',
+						data:getgegu,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					},
+					{
+						name:'大盘',
+						type:'line',
+						data:getdapan,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					}
+				]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+	});
+
+</script>
+<!--ATR图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "atr"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('ATRchart'));
+			//get JSON 数据
+			var getdate=[];
+			var getatr=[];
+			for (var i=0;i<data.length;i++){
+				getdate[i]=data[i].date;
+				getatr[i]=data[i].atr;
+			}
+			// 指定图表的配置项和数据
+			option = {
+				tooltip: {
+					trigger: 'axis',
+				},
+				grid: {
+					top:40,
+					left: '0%',
+					right: '10%',
+					bottom: '10%',
+					containLabel: true
+				},
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 20,
+					end : 80
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: getdate
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: [
+					{
+						name:'ATR',
+						type:'line',
+						data:getatr,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					}
+				]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+	});
+
+</script>
+<!--MACD图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "macd"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('MACDchart'));
+			var getdate=[];
+			var getdea=[];
+			var getdif=[];
+			for (var i=0;i<data.length;i++){
+				getdate[i]=data[i].date;
+				getdea[i]=data[i].dea;
+				getdif[i]=data[i].dif;
+			}
+			// 指定图表的配置项和数据
+			option = {
+				legend: {
+					data:['DEA','DIF'],
+					top:0
+				},
+				tooltip: {
+					trigger: 'axis',
+				},
+				grid: {
+					top:60,
+					left: '0%',
+					right: '10%',
+					bottom: '10%',
+					containLabel: true
+				},
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 20,
+					end : 80
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: getdate
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: [
+					{
+						name:'DEA',
+						type:'line',
+						data:getdea,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					},
+					{
+						name:'DIF',
+						type:'line',
+						data:getdif,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						},
+						markLine : {
+							data : [
+								{type : 'average', name: '平均值'}
+							]
+						}
+					}
+				]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+	});
+
+</script>
+<!--KDJ图-->
+<script type="text/javascript">
+	var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	var code=unescape(r[2]);
+	$.ajax({
+		url: "http://localhost:8080/web/oneStock",
+		type: "GET",
+		dataType: "json",
+		data: {"code": code, "type": "kdj"},
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('KDJchart'));
+			//get JSON 数据
+			var getdate=[];
+			var getK=[];
+			var getD=[];
+			var getJ=[];
+			for (var i=0;i<data.length;i++){
+				getdate[i]=data[i].date;
+				getK[i]=data[i].k;
+				getD[i]=data[i].d;
+				getJ[i]=data[i].j;
+			}
+			// 指定图表的配置项和数据
+			option = {
+				legend: {
+					data:['K','D','J'],
+					top:0
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				grid: {
+					top:60,
+					left: '0%',
+					right: '10%',
+					bottom: '10%',
+					containLabel: true
+				},
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 20,
+					end : 80
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: getdate
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: [
+					{
+						name:'K',
+						type:'line',
+						data:getK,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+					},
+					{
+						name:'D',
+						type:'line',
+						data:getD,
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+					},
+					{
+						name: 'J',
+						type: 'line',
+						data: getJ,
+						markPoint: {
+							data: [
+								{type: 'max', name: '最大值'},
+								{type: 'min', name: '最小值'}
+							]
+						}
+					}
+				]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+		});
+
+</script>
+<!--五档盘口-->
+<script type="text/javascript">
+	function wudangdata(){
+		var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var code=unescape(r[2]);
+		$.ajax({
+			url: "http://localhost:8080/web/oneStockOther",
+			type:"GET",
+			dataType:"json",
+			data:{"code":code,"type":"wudang"},
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				var tb = document.getElementById("wudangpankou");
+				var strHTML;
+				strHTML="<thead><th>五档盘口</th><th></th></thead>";
+				strHTML=strHTML+"<tr><td>卖五</td><td>"+data[0].a5+"</td></tr>";
+				strHTML=strHTML+"<tr><td>卖四</td><td>"+data[0].a4+"</td></tr>";
+				strHTML=strHTML+"<tr><td>卖三</td><td>"+data[0].a3+"</td></tr>";
+				strHTML=strHTML+"<tr><td>卖二</td><td>"+data[0].a2+"</td></tr>";
+				strHTML=strHTML+"<tr><td>卖一</td><td>"+data[0].a1+"</td></tr>";
+				strHTML=strHTML+"<tr><td>买一</td><td>"+data[0].b1+"</td></tr>";
+				strHTML=strHTML+"<tr><td>买二</td><td>"+data[0].b2+"</td></tr>";
+				strHTML=strHTML+"<tr><td>买三</td><td>"+data[0].b3+"</td></tr>";
+				strHTML=strHTML+"<tr><td>买四</td><td>"+data[0].b4+"</td></tr>";
+				strHTML=strHTML+"<tr><td>买五</td><td>"+data[0].b5+"</td></tr>";
+				tb.innerHTML=strHTML;
+			}
+		});
+	}
+</script>
+<!--实时行情-->
+<script type="text/javascript">
+	function shishidata(){
+		var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var code=unescape(r[2]);
+		$.ajax({
+			url: "http://localhost:8080/web/oneStockOther",
+			type:"GET",
+			dataType:"json",
+			data:{"code":code,"type":"shishi"},
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				var tb = document.getElementById("shishi");
+				var pre=data[0].pre_close;
+				var strHTML;
+				strHTML="<thead><th>实时股票行情</th><th></th></thead>";
+				strHTML=strHTML+"<tr><td>股票代码</td><td>"+data[0].code+"</td></tr>";
+				strHTML=strHTML+"<tr><td>股票名称</td><td>"+data[0].name+"</td></tr>";
+				strHTML=strHTML+"<tr><td>所属行业</td><td>"+data[0].industry+"</td></tr>";
+				if(data[0].open>=pre){
+					strHTML=strHTML+"<tr><td>今日开盘价</td><td><font color='red'>"+data[0].open+"</font></td></tr>";
+				}else {
+					strHTML=strHTML+"<tr><td>今日开盘价</td><td><font color='green'>"+data[0].open+"</font></td></tr>";
+				}
+				strHTML=strHTML+"<tr><td>昨日收盘价</td><td>"+pre+"</td></tr>";
+
+				if(data[0].price>=pre){
+					strHTML=strHTML+"<tr><td>当前价格</td><td><font color='red'>"+data[0].price+"</font></td></tr>";
+				}else {
+					strHTML=strHTML+"<tr><td>当前价格</td><td><font color='green'>"+data[0].price+"</font></td></tr>";
+				}
+				if(data[0].high>=pre){
+					strHTML=strHTML+"<tr><td>今日最高价</td><td><font color='red'>"+data[0].high+"</font></td></tr>";
+				}else {
+					strHTML=strHTML+"<tr><td>今日最高价</td><td><font color='green'>"+data[0].high+"</font></td></tr>";
+				}
+				if(data[0].low>=pre){
+					strHTML=strHTML+"<tr><td>今日最低价</td><td><font color='red'>"+data[0].low+"</font></td></tr>";
+				}else {
+					strHTML=strHTML+"<tr><td>今日最低价</td><td><font color='green'>"+data[0].low+"</font></td></tr>";
+				}
+				strHTML=strHTML+"<tr><td>成交量</td><td>"+data[0].volume+"</td></tr>";
+				strHTML=strHTML+"<tr><td>成交金额</td><td>"+data[0].account+"</td></tr>";
+				strHTML=strHTML+"<tr><td>更新时间</td><td>"+data[0].time+"</td></tr>";
+				tb.innerHTML=strHTML;
+			}
+		});
+	}
+</script>
+<!--前景预测-->
+<script type="text/javascript">
+	function qianjingdata(){
+		var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var code=unescape(r[2]);
+		$.ajax({
+			url: "http://localhost:8080/web/oneStockOther",
+			type: "GET",
+			data: {"code": code, "type": "qianjing"},
+			contentType: "charset=utf-8",
+			success: function (data) {
+				var panel = document.getElementById("qianjingyuce");
+				panel.innerHTML="<p style='text-indent:2em;font-size: 20px;font-weight: 900;'>"+data+"</p>";
+			}
+		});
+	}
+</script>
+<!--自选股文字-->
+<script type="text/javascript">
+	function loadzixuangu(){
+		var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var code=unescape(r[2]);
+		$.ajax({
+			url: "http://localhost:8080/web/zixuangu",
+			type: "GET",
+			data: {"code": code, "type": "dakai"},
+			contentType: "charset=utf-8",
+			success: function (data) {
+				var bu = document.getElementById("bu");
+				bu.innerText=data;
+			}
+		});
+
+
+
+	}
+</script>
+<!--点击自选股-->
+<script type="text/javascript">
+	function clickzixuangu(){
+		var reg = new RegExp("(^|&)code=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var code=unescape(r[2]);
+		$.ajax({
+			url: "http://localhost:8080/web/zixuangu",
+			type: "GET",
+			data: {"code": code, "type": "dianji"},
+			contentType: "charset=utf-8",
+			success: function (data) {
+				if(data=="login"){
+					window.location.href="http://localhost:8080/web/login.html";
+				}else{
+					var bu = document.getElementById("bu");
+					bu.innerText=data;
+				}
+			}
+		});
+	}
+</script>
+</body>
+</html>

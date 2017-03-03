@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="picture/shorticon.png" type="image/x-icon" />
+    <title>Shrewd-Investments:recomment</title>
+    <link href="CSS/Searchbar.css" rel="stylesheet">
+    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="CSS/modelCSS/nav.css" rel="stylesheet">
+    <script src="JS/jquery.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    <script src="JS/echarts.min.js"></script>
+    <link href="CSS/nowlisttable.css" rel="stylesheet">
+    <link href="CSS/h1wenzi.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/index.min.css" >
+    <style type="text/css">
+        #container {
+            width:1903px;
+            margin:0 auto;/*主面板DIV居中*/
+        }
+        #main {
+            width:100%;
+            height:1200px;
+            /*border:1px #F00 solid;*/   /*在周围显示一圈红色的线*/
+        }
+        #left{
+            border-right:3px dotted #987cb9;
+            width: 33%;
+            height: 100%;
+            float:left;
+        }
+        #center{
+            border-right:3px dotted #987cb9;
+            width: 34%;
+            height: 100%;
+            float:left;
+        }
+        #right{
+
+            width: 33%;
+            height: 100%;
+            float:left;
+        }
+        .shuoming{
+
+            height: 20%;
+            margin: 20px 20px 20px 20px;
+
+        }
+        .tuijiantable{
+
+            height: 23%;
+            margin: 20px 20px 20px 20px;
+        }
+        .tuijianchart{
+
+            height: 55%;
+            margin: 20px 20px 20px 20px;
+        }
+    </style>
+</head>
+<body background="picture/bj.jpg" style="background-repeat:no-repeat;background-attachment:fixed;position:absolute; top:0; left:0; height:100%;width:100%;
+background-size: cover; " onload="table1data();table2data();table3data()">
+<div id="container">
+    <div id="header">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="home.html" style="font-size:20px">Shrewd-Investments</a></li>
+                    <li><a href="NowList.html" style="font-size:20px">Nowlist</a></li>
+                    <li><a href="hyAnalyze.html" style="font-size:20px">Analyze</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">Recomment<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="recommentsha.html">For Shanghai A</a></li>
+                            <li class="divider"></li>
+                            <li><a href="recommentshb.html">For Shanghai B</a></li>
+                            <li class="divider"></li>
+                            <li><a href="recommentsza.html">For Shenzhen A</a></li>
+                            <li class="divider"></li>
+                            <li><a href="recommentszb.html">For Shenzhen B</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-toggle="modal"
+                                   data-target="#AboutOne">About Us</a></li>
+                            <li class="divider"></li>
+                            <li><a data-toggle="modal"
+                                   data-target="#AboutTwo">Contact Us</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="home.html" style="font-size:20px">to be continued</a></li>
+                </ul>
+                <ul class="nav navbar-nav" style="float: right;font-size:20px;height: 50px;">
+                    <li>
+                        <div id="scbar_background">
+                            <form>
+                                <input type="text" id="scbar_text" placeholder="搜索您想要的股票或指数代码">
+                                <input type="button" id="scbar_button" value=" ">
+                            </form>
+                        </div>
+                    </li>
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size:20px"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="userServlet"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+                            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
+                            <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </nav>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="AboutOne" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h3><strong class="modal-title" style="font-size:20px">About Us</strong></h3>
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-indent:2em;font-size:20px;">Shrewd-Investments Company是一家致力于提供金融信息综合服务的有限公司（筹备）。
+                            公司在计算机和互联网科技不断发展的背景下，立足快速发展的中国金融市场，通过持续的产品创新和技术创新，凭借权威、全面、专业、及时的优势，正蓬勃发展。在开拓中国市场的同时，积极实施国际化发展战略，
+                            以期成为在世界范围内具有影响力的金融信息综合服务提供商。
+                        </p>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="AboutTwo" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h3><strong class="modal-title" style="font-size:20px">Contact Us</strong></h3>
+                    </div>
+                    <div class="modal-body" style="font-size:20px">
+                        <address>
+                            <strong>Shrewd-Investments Company, Inc.</strong><br>
+                            No. 22,Hankou Road, Nanjing City.
+                        </address>
+                        <address>
+                            <strong>NanJing University · Software Instityte</strong><br>
+                            <a href="mailto:#">software@mail.nju.edu.cn</a>
+                        </address>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+        </div>
+        <!-- /.modal -->
+        <br>
+        <br>
+        <br>
+        <div class="panel shuoming" style="margin: -9px 40% -10px 40%;background-color: slategray">
+            <div class="panel-heading ">
+                <h1 class="h1wenzi ">上证A股</h1>
+            </div>
+        </div>
+        <HR style="border:1px dashed #987cb9" width="80%" color=#987cb9  SIZE=1>
+    </div>
+    <div id="main">
+        <div id="left">
+            <div class="panel panel-default shuoming">
+                <div class="panel-heading">
+                    <h3 class="panel-title">前景预测推荐理由-涨幅最大</h3>
+                </div>
+                <div class="panel-body">
+                	<p style='text-indent:2em;font-size: 20px;font-weight: 900;'>通过计算大致预期股票价值范围，而后与当前价格进行比较得到涨幅，这个板块中推荐的股票可能会得到不小的收益，但是与涨势最稳相比较可能会有较大风险。</p>
+                </div>
+            </div>
+            <div class="tuijiantable">
+                <table cellspacing="0" id="table1">
+                </table>
+            </div>
+            <div class="tuijianchart">
+                <div id="chart1" style="width: 100%;height: 97%"></div>
+
+            </div>
+        </div>
+        <div id="center">
+            <div class="panel panel-default shuoming">
+                <div class="panel-heading">
+                    <h3 class="panel-title">前景预测推荐理由-涨势最稳</h3>
+                </div>
+                <div class="panel-body">
+                <p style='text-indent:2em;font-size: 20px;font-weight: 900;'>通过计算得到股票上涨，持平，下跌的概率，而后推荐其中上涨概率最大的几支股票，这个板块推荐的股票增长的趋势最为稳健。</p>
+                </div>
+            </div>
+            <div class="tuijiantable">
+                <table cellspacing="0" id="table2">
+                </table>
+            </div>
+            <div class="tuijianchart">
+                <div id="chart2" style="width: 100%;height: 97%"></div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="panel panel-default shuoming">
+                <div class="panel-heading">
+                    <h3 class="panel-title">前景预测推荐理由-波动最大</h3>
+                </div>
+                <div class="panel-body">
+                <p style='text-indent:2em;font-size: 20px;font-weight: 900;'>通过计算得到股票一周内的波动程度，往往波动极大的股票蕴含着极大的风险以及与随之而来的丰厚利润。</p>
+                </div>
+            </div>
+            <div class="tuijiantable">
+                <table cellspacing="0"  id="table3">
+                </table>
+            </div>
+            <div class="tuijianchart">
+                <div id="chart3" style="width: 100%;height: 97%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="foot">
+        <HR style="border:1px dashed #987cb9" width="80%" color=#987cb9  SIZE=1>
+        <div class="container pb-lg">
+            <div class="col-md-4">
+                <address style="font-size:20px">
+                    <strong>Shrewd-Investments Company, Inc.</strong><br>
+                    No. 22,Hankou Road, Nanjing City.
+                </address>
+            </div>
+            <div class="col-md-4" >
+                <address style="font-size:20px">
+                    <strong>NanJing University · Software Instityte</strong><br>
+                    <a href="mailto:#">software@mail.nju.edu.cn</a>
+                </address>
+            </div>
+            <div class="col-md-4" >
+                <address style="font-size:20px">
+                    <strong>Copyright@Shrewd-Investments 2016-2026</strong><br>
+                </address>
+            </div>
+        </div>
+    </div>
+
+</div>
+	<div class="toolbar">
+		<a href="javascript:;" class="toolbar-item toolbar-item-weixin">
+			<span class="toolbar-layer"></span>
+		</a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-feedback"></a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-app">
+			<span class="toolbar-layer"></span>
+		</a>
+		<a id="backTop" href="javascript:;" class="toolbar-item toolbar-item-top" ></a>
+	</div>
+		
+	<script type="text/javascript" src="JS/require.js" data-main="JS/main"></script>
+<!--第一个图-->
+<script type="text/javascript">
+
+    //获得json数据
+    $.ajax({
+        url: "http://localhost:8080/web/RecommentServlet",
+        type:"GET",
+        dataType:"json",
+        data:{"code":"sha","type":"chart1"},
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            var myChart = echarts.init(document.getElementById('chart1'));
+            var getdata=[];
+            for (var i=0;i<data.length;i++){
+                var m=[];
+                m[0]=data[i].code;
+                m[1]=data[i].number;
+                m[2]=data[i].name;
+                m[3]=data[i].industry;
+                getdata[i]=m;
+            }
+            option = {
+                title : {
+                    text: '折扣率相对与价值中心的偏离度'
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter : function (para) {
+                        var value=para[0].value;
+                        return "股票代码: "+value[0]+'<br/>'+
+                                "偏离度: "+value[1]+'%<br/>'+
+                                "股票名称: "+value[2]+'<br/>'+
+                                "所属行业: "+value[3];
+                    }
+                },
+                legend: {
+                    data:['偏离度']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                dataZoom : {
+                    show : true,
+                    realtime : true,
+                    start :0,
+                    end : 50
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : function(){
+                            var list=[];
+                            for (var i=0;i<getdata.length;i++){
+                                list.push(getdata[i][0])
+                            }
+                            return list
+                        }()
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+        				axisLabel: {
+        					formatter : function(v) {
+        						return  v+"%"
+        					}
+        				}
+                    }
+                ],
+                series : [
+                    {
+                        name:'偏离度',
+                        type:'bar',
+                        data: getdata,
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    });
+
+</script>
+<!--第二个图-->
+<script type="text/javascript">
+    //获得json数据
+    $.ajax({
+        url: "http://localhost:8080/web/RecommentServlet",
+        type:"GET",
+        dataType:"json",
+        data:{"code":"sha","type":"chart2"},
+        contentType: "application/json; charset=utf-8",
+        success: function(data) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart2'));
+            var getdata=[];
+            for (var i=0;i<data.length;i++){
+                var m=[];
+                m[0]=data[i].code;
+                m[1]=data[i].number;
+                m[2]=data[i].name;
+                m[3]=data[i].industry;
+                getdata[i]=m;
+            }
+            option = {
+                title : {
+                    text: '价值中心的稳定程度'
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter : function (para) {
+                        var value=para[0].value;
+                        return "股票代码: "+value[0]+'<br/>'+
+                                "稳定度: "+value[1]+'<br/>'+
+                                "股票名称: "+value[2]+'<br/>'+
+                                "所属行业: "+value[3];
+                    }
+                },
+                legend: {
+                    data:['稳定程度']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                dataZoom : {
+                    show : true,
+                    realtime : true,
+                    start :0,
+                    end : 50
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : function(){
+                            var list=[];
+                            for (var i=0;i<getdata.length;i++){
+                                list.push(getdata[i][0])
+                            }
+                            return list
+                        }()
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'稳定程度',
+                        type:'bar',
+                        data: getdata,
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    });
+
+</script>
+<!--第三个图-->
+<script type="text/javascript">
+    $.ajax({
+        url: "http://localhost:8080/web/RecommentServlet",
+        type: "GET",
+        dataType: "json",
+        data: {"code": "sha", "type": "chart3"},
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart3'));
+            var getdata=[];
+            for (var i=0;i<data.length;i++){
+                var m=[];
+                m[0]=data[i].code;
+                m[1]=data[i].number;
+                m[2]=data[i].name;
+                m[3]=data[i].industry;
+                getdata[i]=m;
+            }
+            option = {
+                title : {
+                    text: '股价波动程度'
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter : function (para) {
+                        var value=para[0].value;
+                        return "股票代码: "+value[0]+'<br/>'+
+                                "波动程度: "+value[1]+'<br/>'+
+                                "股票名称: "+value[2]+'<br/>'+
+                                "所属行业: "+value[3];
+                    }
+
+                },
+                legend: {
+                    data:['波动程度']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                dataZoom : {
+                    show : true,
+                    realtime : true,
+                    start :0,
+                    end : 50
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : function(){
+                            var list=[];
+                            for (var i=0;i<getdata.length;i++){
+                                list.push(getdata[i][0])
+                            }
+                            return list
+                        }()
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'波动程度',
+                        type:'bar',
+                        data:getdata,
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    });
+
+</script>
+<!--第一个表-->
+<script type="text/javascript">
+    function table1data(){
+        $.ajax({
+            url: "http://localhost:8080/web/RecommentServlet",
+            type:"GET",
+            dataType:"json",
+            data:{"code":"sha","type":"table1"},
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                var tb = document.getElementById("table1");
+                var rowCount = 0;
+                var getdata=eval(data);
+                for(var a=0;a<6;a++){
+                    var newRow = tb.insertRow(rowCount);
+                    rowCount=rowCount+1;
+                    //get数据
+                    if (a==0){
+                        tb.innerHTML="<thead><th>推荐股票</th><th>股票代码</th><th>股票名称</th><th>所属行业</th></thead>";
+                    }
+                    else{
+                        switch (a){
+                            case 1:newRow.insertCell(0).innerHTML="<img src='picture/no1.png'>";
+                                break;
+                            case 2:newRow.insertCell(0).innerHTML="<img src='picture/no2.png'>";
+                                break;
+                            case 3:newRow.insertCell(0).innerHTML="<img src='picture/no3.png'>";
+                                break;
+                            default:
+                                newRow.insertCell(0).innerText=String(a);
+                                break;
+                        }
+                        newRow.insertCell(1).innerHTML="<a href='http://localhost:8080/web/oneStock.html?code="+getdata[a-1].code+"'>"+getdata[a-1].code+"</a>";
+	                    newRow.insertCell(2).innerText=getdata[a-1].name;
+                        newRow.insertCell(3).innerText=getdata[a-1].industry;
+                    }
+                }
+            }
+        });
+    }
+</script>
+<!--第二个表-->
+<script type="text/javascript">
+function table2data(){
+    $.ajax({
+        url: "http://localhost:8080/web/RecommentServlet",
+        type:"GET",
+        dataType:"json",
+        data:{"code":"sha","type":"table2"},
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            var tb = document.getElementById("table2");
+            var rowCount = 0;
+            var getdata=eval(data);
+            for(var a=0;a<6;a++){
+                var newRow = tb.insertRow(rowCount);
+                rowCount=rowCount+1;
+                //get数据
+                if (a==0){
+                    tb.innerHTML="<thead><th>推荐股票</th><th>股票代码</th><th>股票名称</th><th>所属行业</th></thead>";
+                }
+                else{
+                    switch (a){
+                        case 1:newRow.insertCell(0).innerHTML="<img src='picture/no1.png'>";
+                            break;
+                        case 2:newRow.insertCell(0).innerHTML="<img src='picture/no2.png'>";
+                            break;
+                        case 3:newRow.insertCell(0).innerHTML="<img src='picture/no3.png'>";
+                            break;
+                        default:
+                            newRow.insertCell(0).innerText=String(a);
+                            break;
+                    }
+                    newRow.insertCell(1).innerHTML="<a href='http://localhost:8080/web/oneStock.html?code="+getdata[a-1].code+"'>"+getdata[a-1].code+"</a>";
+                    newRow.insertCell(2).innerText=getdata[a-1].name;
+                    newRow.insertCell(3).innerText=getdata[a-1].industry;
+                }
+            }
+        }
+    });
+}
+</script>
+<!--第三个表-->
+<script type="text/javascript">
+    function table3data(){
+        $.ajax({
+            url: "http://localhost:8080/web/RecommentServlet",
+            type:"GET",
+            dataType:"json",
+            data:{"code":"sha","type":"table3"},
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                var tb = document.getElementById("table3");
+                var getdata=eval(data);
+                for(var a=0;a<6;a++){
+                    var newRow = tb.insertRow(a);
+                    //get数据
+                    if (a==0){
+                        tb.innerHTML="<thead><th>推荐股票</th><th>股票代码</th><th>股票名称</th><th>所属行业</th></thead>";
+                    }
+                    else{
+                        switch (a){
+                            case 1:newRow.insertCell(0).innerHTML="<img src='picture/no1.png'>";
+                                break;
+                            case 2:newRow.insertCell(0).innerHTML="<img src='picture/no2.png'>";
+                                break;
+                            case 3:newRow.insertCell(0).innerHTML="<img src='picture/no3.png'>";
+                                break;
+                            default:
+                                newRow.insertCell(0).innerText=String(a);
+                                break;
+                        }
+                        newRow.insertCell(1).innerHTML="<a href='http://localhost:8080/web/oneStock.html?code="+getdata[a-1].code+"'>"+getdata[a-1].code+"</a>";
+                        newRow.insertCell(2).innerText=getdata[a-1].name;
+                        newRow.insertCell(3).innerText=getdata[a-1].industry;
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+	<script type="text/javascript">
+			$('#scbar_button').click(function(){
+				//alert($("#scbar_text").val());
+				var scbartext=$("#scbar_text").val();
+				$.ajax({
+					url: "http://localhost:8080/web/search",
+					type:"GET",
+					async: false,
+					data:{code:scbartext},
+			        success: function(data){
+			        	if(data=="fail"){
+			        		document.getElementById("scbar_text").value="";
+			        		document.getElementById("scbar_text").setAttribute("placeholder", "您所输入的编号或名称不正确");
+			        	}else if(data=="succMarket"){
+			        		window.location.href="/web/oneMarket.html?code="+scbartext;
+			        	}else{
+			        		window.location.href="/web/oneStock.html?code="+scbartext;
+			        	}
+			        }
+				});
+			});
+
+	</script>
+
+</body>
+</html>

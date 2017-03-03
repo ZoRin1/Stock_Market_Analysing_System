@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<link rel="shortcut icon" href="picture/shorticon.png" type="image/x-icon" />
+	<title>Shrewd-Investments:Analyze</title>
+	<link href="CSS/bootstrap.min.css" rel="stylesheet">
+	<link href="CSS/modelCSS/nav.css" rel="stylesheet">
+	<script src="JS/jquery.min.js"></script>
+	<script src="JS/bootstrap.min.js"></script>
+	<link href="CSS/Searchbar.css" rel="stylesheet">
+	<script src="JS/dist/echarts.js">
+	</script>
+	<link href="CSS/nowlisttable.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/index.min.css" >
+<style type="text/css">
+#left{
+	height:100%;
+	width:30%;
+	float:left;
+}
+#right{
+	height:100%;
+	width:18%;
+	float:left;
+}
+#rightLine{
+	height:100%;
+	width:2%;
+	float:left;
+}
+#StockPie{
+	width:50%;
+	height:100%;
+	float:left;
+}
+#StockPie2{
+	width:50%;
+	height:100%;
+	float:left;
+}
+#StockPie3{
+	width:50%;
+	height:100%;
+	float:left;
+}
+#StockPie4{
+	width:50%;
+	height:100%;
+	float:left;
+}
+/*主面板样式*/
+#container { 
+        width:1903px; 
+        margin:0 auto;/*主面板DIV居中*/
+}
+#main {
+        width:100%;
+        height:1000px;
+        /*border:1px #F00 solid;*/   /*在周围显示一圈红色的线*/
+}
+#middle{
+	width:50%;
+	height:100%;
+	float:left;
+}
+#middleUp{
+	width:100%;
+	height:50%;
+	float:left;
+}
+#middleDown{
+	width:100%;
+	height:50%;
+	float:left;
+}
+</style>
+</head>
+<body background="picture/bj.jpg" style="position:absolute; top:0; left:0; height:100%;width:100%;background-repeat:no-repeat;background-attachment:fixed; 
+background-size: cover; " onload="gethyTbale1data();gethyTable2data()">
+	
+	<div id="container">
+	<div id="header">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="home.html" style="font-size:20px">Shrewd-Investments</a></li>
+					<li><a href="NowList.html" style="font-size:20px">Nowlist</a></li>
+					<li><a href="hyAnalyze.html" style="font-size:20px">Analyze</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">Recomment<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="recommentsha.html">For Shanghai A</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentshb.html">For Shanghai B</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentsza.html">For Shenzhen A</a></li>
+							<li class="divider"></li>
+							<li><a href="recommentszb.html">For Shenzhen B</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">About<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a data-toggle="modal"
+								   data-target="#AboutOne">About Us</a></li>
+							<li class="divider"></li>
+							<li><a data-toggle="modal"
+								   data-target="#AboutTwo">Contact Us</a></li>
+						</ul>
+					</li>
+					<li><a href="home.html" style="font-size:20px">to be continued</a></li>
+				</ul>
+				<ul class="nav navbar-nav" style="float: right;font-size:20px;height: 50px;">
+					<li>
+						<div id="scbar_background">
+							<form>
+								<input type="text" id="scbar_text" placeholder="搜索您想要的股票或指数代码">
+								<input type="button" id="scbar_button" value=" ">
+							</form>
+						</div>
+					</li>
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size:20px"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="userServlet"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+							<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
+							<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</nav>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="AboutOne" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+				<h3><strong class="modal-title" style="font-size:20px">About Us</strong></h3>
+            </div>
+            <div class="modal-body">
+                	<p style="text-indent:2em;font-size:20px;">Shrewd-Investments Company是一家致力于提供金融信息综合服务的有限公司（筹备）。
+                	公司在计算机和互联网科技不断发展的背景下，立足快速发展的中国金融市场，通过持续的产品创新和技术创新，凭借权威、全面、专业、及时的优势，正蓬勃发展。在开拓中国市场的同时，积极实施国际化发展战略，
+                	以期成为在世界范围内具有影响力的金融信息综合服务提供商。
+                	</p>            
+              </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="AboutTwo" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+				<h3><strong class="modal-title" style="font-size:20px">Contact Us</strong></h3>
+            </div>
+            <div class="modal-body" style="font-size:20px">
+                <address>
+							  <strong>Shrewd-Investments Company, Inc.</strong><br>
+								 No. 22,Hankou Road, Nanjing City.
+				</address>
+				<address>    
+								<strong>NanJing University · Software Instityte</strong><br>
+						  		<a href="mailto:#">software@mail.nju.edu.cn</a>
+						 </address>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal -->
+<br>
+<br>
+<br>
+	</div>
+		
+		<div id="main">
+					
+		<div id="left">
+			<ul id="hy" class="nav nav-tabs">
+				<li><a href="#home" >沪市行业涨幅榜</a>
+				</li>
+				<li><a href="#ios" >深市行业涨幅榜</a>
+				</li>
+			</ul>
+			<div id="hyContent" class="tab-content">
+				<div class="tab-pane " id="home">
+					<table style="width:100%;" id="hyTable1">
+					</table>
+				</div>
+				<div class="tab-pane" id="ios">
+					<table style="width:100%;" id="hyTable2">
+					</table>
+				</div>
+			</div>
+			<script> 
+    			  $(function () { 
+       				 $('#hy a:first').tab('show');//初始化显示哪个tab 
+      
+      				  $('#hy a').click(function (e) { 
+        			  e.preventDefault();//阻止a链接的跳转行为 
+         			 $(this).tab('show');//显示当前选中的链接及关联的content 
+      			  }) 
+    			  }) 
+   			 </script>
+		</div>
+		
+		<div id="middle">
+		<!--  
+			<ul id="hyPie" class="nav nav-tabs">
+				<li><a href="#sh">上证A股</a></li>
+				<li class="active"><a href="#sz">深证A股</a></li>
+			</ul>
+			<div id="hyContent" class="tab-content" style="width:100%;height:100%;float:left;">
+				<div class="tab-pane fade in active" id="sh" style="width:100%;height:100%;float:left;">
+					<div id="shpie"></div>
+				</div>
+				<div class="tab-pane fade in active" id="sz" style="width:100%;height:100%;float:left;">
+					<div id="szpie"></div>
+				</div>
+			</div>
+	<script> 
+      $(function () { 
+        $('#hyPie a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#hyPie a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        }) 
+      }) 
+    </script>
+    -->
+    		<div id="middleUp">
+    			<div id="StockPie"></div>
+    			<div id="StockPie2"></div>
+    		</div>
+    		<div id="middleDown">
+    		   	<div id="StockPie3"></div>
+    			<div id="StockPie4"></div>
+    		</div>
+		</div>
+	
+		<div id="rightLine">
+			<hr style="width:2px;height:100px; ">
+		</div>
+	
+		<div id="right">
+			<div class="col-1-3">
+			<div id="sidebar" class="wrap-col">
+				<div class="wrap-slidebar">
+					<div class="widget">
+						<div class="wid-about"><a href="hyAnalyze.html">行业资讯</a></div>
+					</div>
+					<div class="widget">
+						<div class="wid-header">
+							<h4 style="font-weight:bold;">分类</h4>
+							<div class="clear"></div>
+						</div>
+						<div class="wid-content">
+							<a href="#">金属材料 ,</a>
+							<a href="#">机械仪表 ,</a>
+							<a href="#">电子 ,</a>
+							<a href="#">综合类 ,</a>
+							<a href="#">文化传播 ,</a>
+							<a href="#">生物医药 ,</a>
+							<a href="#">石油化工 ,</a>
+							<a href="#">纺织服装 ,</a>
+							<a href="#">造纸印刷 ,</a>
+							<a href="#">食品饮料 </a>
+						</div>
+					</div>
+					<div class="widget wid-posts">
+						<div class="wid-header">
+							<h4 style="font-weight:bold;">近期资讯</h4>
+							<div class="clear"></div>
+						</div>
+						<div class="wid-content">
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/yanjiu/124581.html" target="_Blank">医药行业：PPP加速扩张 连锁专科凸显长期价值</a></h6><br>
+								  <p>2016-06-18</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/jinghua/124110.html" target="_Blank">机械行业：需求重估+技术进步+制度变革</a></h6><br>
+								  <p>2016-06-18</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/jinghua/124187.html" target="_Blank">煤炭行业：电厂存煤上升 可用天数增加</a></h6><br>
+								  <p>2016-06-18</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/jinghua/124185.html" target="_Blank">传媒行业：打开崭新世界 VR产业蓄势待发</a></h6><br>
+								  <p>2016-06-18</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/jinghua/124515.html" target="_Blank">保险行业：产险竞争日趋激烈 健康险表现突出</a></h6><br>
+								  <p>2016-06-18</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="widget wid-archives">
+						<div class="wid-header">
+							<h4 style="font-weight:bold;">历史资讯</h4>
+							<div class="clear"></div>
+						</div>
+						<div class="wid-content">
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/yanjiu/122375.html" target="_Blank">医药行业：长期看好精准医疗大方向</a></h6><br>
+								  <p>2016-05-09</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/yanjiu/122050.html" target="_Blank">信息技术：报告多维度擘画行业发展蓝图</a></h6><br>
+								  <p>2016-05-03</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6  ><a href="http://www.caiguu.com/xingye/yanjiu/122446.html" target="_Blank">家电行业：性能与品质提升进一步推动消费升级</a></h6><br>
+								  <p>2016-05-10</p>
+								</div>
+							</div>
+							<div class="row post">
+								<!-- <a href="#"><img src="picture/.png"></a> -->
+								<div class="resent">
+								  <h6><a href="http://www.caiguu.com/xingye/yanjiu/124106.html" target="_Blank">基础化工：国际公司抢滩布局高端化工产品</a></h6><br>
+								  <p>2016-05-06</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 
+					<div class="widget wid-gallery">
+						<div class="wid-header">
+							<h4>Gallery</h4>
+							<div class="clear"></div>
+						</div>
+						<div class="wid-content">
+							<div class="col-1-3">
+								<a href="#"><img src="images/thumb01.jpg"></a>
+								<a href="#"><img src="images/thumb02.jpg"></a>
+								<a href="#"><img src="images/thumb03.jpg"></a>
+								<a href="#"><img src="images/thumb04.jpg"></a>
+						    </div>
+						    <div class="col-1-3">
+								<a href="#"><img src="images/thumb05.jpg"></a>
+								<a href="#"><img src="images/thumb06.jpg"></a>
+								<a href="#"><img src="images/thumb01.jpg"></a>
+								<a href="#"><img src="images/thumb02.jpg"></a>
+						    </div>
+						    <div class="col-1-3">
+								<a href="#"><img src="images/thumb03.jpg"></a>
+								<a href="#"><img src="images/thumb04.jpg"></a>
+								<a href="#"><img src="images/thumb05.jpg"></a>
+								<a href="#"><img src="images/thumb06.jpg"></a>
+						    </div>
+						</div>
+					</div>
+					<div class="widget wid-posts">
+						<div class="wid-header">
+							<h4>Popular Post</h4>
+						<div class="clear"></div>
+						</div>
+						<div class="wid-content">
+							<div class="row post">
+								<a href="#"><img src="images/thumb02.jpg"></a>
+								<div class="resent">
+								  <h6><a href="#">A Blue Morning</a></h6><br>
+								  <p>March 1, 2015</p>
+								</div>
+							</div>
+							<div class="row post">
+								<a href="#"><img src="images/thumb03.jpg"></a>
+								<div class="resent">
+								  <h6><a href="#">Visiting Austria</a></h6><br>
+								  <p>March 1, 2015</p>
+								</div>
+							</div>
+							<div class="row post">
+								<a href="#"><img src="images/thumb01.jpg"></a>
+								<div class="resent">
+								  <h6><a href="#">Miscellaneous</a></h6><br>
+								  <p>March 1, 2015</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				 -->
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+		
+		
+		
+		
+	</div>
+	<div class="toolbar">
+		<a href="javascript:;" class="toolbar-item toolbar-item-weixin">
+			<span class="toolbar-layer"></span>
+		</a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-feedback"></a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-app">
+			<span class="toolbar-layer"></span>
+		</a>
+		<a id="backTop" href="javascript:;" class="toolbar-item toolbar-item-top" ></a>
+	</div>
+		
+	<script type="text/javascript" src="JS/require.js" data-main="JS/main"></script>
+	<HR style="border:1px dashed #987cb9" width="80%" color=#987cb9  SIZE=1>
+	<div class="container pb-lg">
+		<div class="col-md-4">
+			<address style="font-size:20px">
+				<strong>Shrewd-Investments Company, Inc.</strong><br>
+				No. 22,Hankou Road, Nanjing City.
+			</address>
+		</div>
+		<div class="col-md-4" >
+			<address style="font-size:20px">
+				<strong>NanJing University · Software Instityte</strong><br>
+				<a href="mailto:#">software@mail.nju.edu.cn</a>
+			</address>
+		</div>
+		<div class="col-md-4" >
+			<address style="font-size:20px">
+				<strong>Copyright@Shrewd-Investments 2016-2026</strong><br>
+			</address>
+		</div>
+	</div>
+
+	<!-- 这里行业涨幅榜的 饼图ajax -->
+	<script type="text/javascript">
+	  require.config({
+		  paths:{
+			  echarts: 'JS/dist'
+		  }
+	  });
+
+	  require(
+				[
+				 	'echarts',
+				 	'echarts/chart/pie',
+				 	'echarts/chart/line',
+				 	'echarts/chart/bar'
+				 ],
+				 function(ec){
+					 $.ajax({
+						 url: "http://localhost:8080/web/hyAnalyzeSer?code=sha&t=chart",
+						 type: "GET",
+						 dataType: "json",
+						 data: {"code": "sha", "t": "chart"},
+						 contentType: "application/json; charset=utf-8",
+						 success: function (data) {
+							 getdatajson=eval(data);
+							 var myChart = ec.init(document.getElementById('StockPie'));
+							 var option = {
+								 title : {
+									 text: '上证A股',
+									 subtext: '行业成交量',
+									 x:'center'
+								 },
+								 tooltip : {
+									 trigger: 'item',
+									 formatter: "{a} <br/>{b} : {c} ({d}%)"
+								 },
+								 legend: {
+									 orient : 'vertical',
+									 x : 'left',
+									 data:['金属材料','机械仪表','电子','综合类','文化传播','生物医药','石油化工','纺织服装','造纸印刷','食品饮料']
+								 },
+								 calculable : true,
+								 series : [
+									 {
+										 name:'行业成交量',
+										 type:'pie',
+										 radius : '55%',
+										 center: ['50%', 225],
+										 data:getdatajson
+									 }
+								 ]
+							 };
+							 var myChart2 = ec.init(document.getElementById('StockPie2'));
+							 var option2 = {
+								 tooltip : {
+									 trigger: 'axis',
+									 axisPointer : {
+										 type: 'shadow'
+									 }
+								 },
+								 legend: {
+									 data:['行业成交量']
+								 },
+								 toolbox: {
+									 show : true,
+									 orient : 'vertical',
+									 y : 'center',
+									 feature : {
+										 mark : {show: true},
+										 magicType : {show: true, type: ['line', 'bar']},
+										 restore : {show: true},
+										 saveAsImage : {show: true}
+									 }
+								 },
+								 calculable : true,
+								 xAxis : [
+									 {
+										 type : 'category',
+										 data : function(){
+											 var list=[];
+											 for (var i=0;i<getdatajson.length;i++){
+												 list.push(getdatajson[i].name)
+											 }
+											 return list
+										 }()
+									 }
+								 ],
+								 yAxis : [
+									 {
+										 type : 'value',
+										 splitArea : {show : true}
+									 }
+								 ],
+								 grid: {
+									 x2:40
+								 },
+								 series : [
+									 {
+										 name:'行业成交量',
+										 type:'bar',
+										 data:function(){
+											 var list=[];
+											 for (var i=0;i<getdatajson.length;i++){
+												 list.push(getdatajson[i].value)
+											 }
+											 return list
+										 }()
+									 }
+								 ]
+							 };
+
+
+
+							 myChart.setOption(option);
+							 myChart2.setOption(option2);
+
+							 myChart.connect(myChart2);
+							 myChart2.connect(myChart);
+
+							 setTimeout(function (){
+								 window.onresize = function () {
+									 myChart.resize();
+									 myChart2.resize();
+								 }
+							 },200)
+						 }
+					 });
+
+
+					 //get JSON 数据
+
+				}
+		  );
+	</script>
+	<script type="text/javascript">
+		require.config({
+			paths:{
+				echarts: 'JS/dist'
+			}
+		});
+
+		require(
+				[
+					'echarts',
+					'echarts/chart/pie',
+					'echarts/chart/line',
+					'echarts/chart/bar'
+				],
+				function(ec){
+					$.ajax({
+						url: "http://localhost:8080/web/hyAnalyzeSer?code=sza&t=chart",
+						type: "GET",
+						dataType: "json",
+						data: {"code": "sza", "t": "chart"},
+						contentType: "application/json; charset=utf-8",
+						success: function (data) {
+							getdatajson=eval(data);
+							var myChart = ec.init(document.getElementById('StockPie3'));
+							var option = {
+								title : {
+									text: '深证A股',
+									subtext: '行业成交量',
+									x:'center'
+								},
+								tooltip : {
+									trigger: 'item',
+									formatter: "{a} <br/>{b} : {c} ({d}%)"
+								},
+								legend: {
+									orient : 'vertical',
+									x : 'left',
+									data:['金属材料','机械仪表','电子','综合类','文化传播','生物医药','石油化工','纺织服装','造纸印刷','食品饮料']
+								},
+								calculable : true,
+								series : [
+									{
+										name:'行业成交量',
+										type:'pie',
+										radius : '55%',
+										center: ['50%', 225],
+										data:getdatajson
+									}
+								]
+							};
+							var myChart2 = ec.init(document.getElementById('StockPie4'));
+							var option2 = {
+								tooltip : {
+									trigger: 'axis',
+									axisPointer : {
+										type: 'shadow'
+									}
+								},
+								legend: {
+									data:['行业成交量']
+								},
+								toolbox: {
+									show : true,
+									orient : 'vertical',
+									y : 'center',
+									feature : {
+										mark : {show: true},
+										magicType : {show: true, type: ['line', 'bar']},
+										restore : {show: true},
+										saveAsImage : {show: true}
+									}
+								},
+								calculable : true,
+								xAxis : [
+									{
+										type : 'category',
+										data : function(){
+											var list=[];
+											for (var i=0;i<getdatajson.length;i++){
+												list.push(getdatajson[i].name)
+											}
+											return list
+										}()
+									}
+								],
+								yAxis : [
+									{
+										type : 'value',
+										splitArea : {show : true}
+									}
+								],
+								grid: {
+									x2:40
+								},
+								series : [
+									{
+										name:'行业成交量',
+										type:'bar',
+										data:function(){
+											var list=[];
+											for (var i=0;i<getdatajson.length;i++){
+												list.push(getdatajson[i].value)
+											}
+											return list
+										}()
+									}
+								]
+							};
+
+
+
+							myChart.setOption(option);
+							myChart2.setOption(option2);
+
+							myChart.connect(myChart2);
+							myChart2.connect(myChart);
+
+							setTimeout(function (){
+								window.onresize = function () {
+									myChart.resize();
+									myChart2.resize();
+								}
+							},200)
+						}
+					});
+
+
+					//get JSON 数据
+
+				}
+		);
+	</script>
+		
+	<!-- 这里是行业涨幅榜的ajax -->
+	<script type="text/javascript">
+		function gethyTbale1data(){
+			$.ajax({
+				url: "http://localhost:8080/web/hyAnalyzeSer",
+				type: "GET",
+				dataType: "json",
+				data: {"code": "sha", "t": "table"},
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					var tb = document.getElementById("hyTable1");
+					var strHTML;
+					for(var a=0;a<11;a++){
+	                    if (a==0){
+	                    	strHTML="<thead><th>名称</th><th>涨跌幅</th><th>领涨企业</th><th>上涨支数</th><th>不变支数</th><th>下跌支数</th></thead>";
+	                    }
+	                    else{
+	                    	strHTML=strHTML+"<tr><td>"+data[a-1].name+"</td>";
+							if(data[a-1].zhangdie>=0){
+								strHTML=strHTML+"<td><font color='red'>"+data[a-1].zhangdie+"</font></td>";
+							}
+							else{
+								strHTML=strHTML+"<td><font color='green'>"+data[a-1].zhangdie+"</font></td>";
+							}
+							strHTML=strHTML+"<td>"+data[a-1].lingzhang+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].shangzhang+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].bubian+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].xiadie+"</td>";
+							strHTML=strHTML+"</tr>";
+	                    }
+					}
+					tb.innerHTML=strHTML;
+				}
+			});
+		}
+
+	</script>
+	<!-- 这里是行业跌幅榜的ajax -->
+	<script type="text/javascript">
+		function gethyTable2data(){
+			$.ajax({
+				url: "http://localhost:8080/web/hyAnalyzeSer",
+				type: "GET",
+				dataType: "json",
+				data: {"code": "sza", "t": "table"},
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					var tb = document.getElementById("hyTable2");
+					var strHTML;
+					for(var a=0;a<11;a++){
+	                    if (a==0){
+	                    	strHTML="<thead><th>名称</th><th>涨跌幅</th><th>领涨企业</th><th>上涨支数</th><th>不变支数</th><th>下跌支数</th></thead>";
+	                    }
+	                    else{
+	                    	strHTML=strHTML+"<tr><td>"+data[a-1].name+"</td>";
+							if(data[a-1].zhangdie>=0){
+								strHTML=strHTML+"<td><font color='red'>"+data[a-1].zhangdie+"</font></td>";
+							}
+							else{
+								strHTML=strHTML+"<td><font color='green'>"+data[a-1].zhangdie+"</font></td>";
+							}
+							strHTML=strHTML+"<td>"+data[a-1].lingzhang+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].shangzhang+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].bubian+"</td>";
+							strHTML=strHTML+"<td>"+data[a-1].xiadie+"</td>";
+							strHTML=strHTML+"</tr>";
+	                    }
+					}
+					tb.innerHTML=strHTML;
+				}
+			});
+		}
+	</script>
+		<script type="text/javascript">
+			$('#scbar_button').click(function(){
+				//alert($("#scbar_text").val());
+				var scbartext=$("#scbar_text").val();
+				$.ajax({
+					url: "http://localhost:8080/web/search",
+					type:"GET",
+					async: false,
+					data:{code:scbartext},
+			        success: function(data){
+			        	if(data=="fail"){
+			        		document.getElementById("scbar_text").value="";
+			        		document.getElementById("scbar_text").setAttribute("placeholder", "您所输入的编号或名称不正确");
+			        	}else if(data=="succMarket"){
+			        		window.location.href="/web/oneMarket.html?code="+scbartext;
+			        	}else{
+			        		window.location.href="/web/oneStock.html?code="+scbartext;
+			        	}
+			        }
+				});
+			});
+
+	</script>
+</body>
+</html>

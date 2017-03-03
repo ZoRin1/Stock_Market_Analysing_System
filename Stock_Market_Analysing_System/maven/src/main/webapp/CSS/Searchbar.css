@@ -1,0 +1,26 @@
+#scbar_background {
+    margin: 0 0 0 0;
+    width: 380px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: url(../picture/s.png) no-repeat 0 0;
+}
+#scbar_text{
+    position: relative;
+    outline: none;
+    top:1px;
+    left: 33px;
+    width: 272px;
+    height: 28px;
+    border:none;
+}
+#scbar_button{
+    border:none;
+    outline: none;
+    position: relative;
+    background-color:transparent;
+    left: 34px;
+    width: 50px;
+    height: 50px;
+}

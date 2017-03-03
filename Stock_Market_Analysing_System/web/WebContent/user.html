@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="picture/shorticon.png" type="image/x-icon" />
+<title>Shrewd-Investments:user</title>
+<link href="CSS/bootstrap.min.css" rel="stylesheet">
+<link href="CSS/modelCSS/nav.css" rel="stylesheet">
+<link href="CSS/userCSS/user.css" rel="stylesheet">
+<link href="CSS/userCSS/Font-Awesome/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/modelCSS/jquery.dataTables.css">
+<link href="CSS/modelCSS/themify-icons.css" rel="stylesheet">
+<script src="JS/jquery.min.js"></script>
+<script src="JS/bootstrap.min.js"></script>
+<script src="JS/echarts.min.js"></script>
+<script src="JS/jquery.dataTables.js"></script>
+<link href="CSS/Searchbar.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/index.min.css" >
+<style type="text/css">
+
+/*主面板样式*/
+#container { 
+        width:1903px; 
+        margin:0 auto;/*主面板DIV居中*/
+}
+#main {
+        width:100%;
+        height:1500px;
+        /*border:1px #F00 solid;*/   /*在周围显示一圈红色的线   239  64 */
+}
+#left{
+	height:100%;
+	width:15%;
+	float:left;
+}
+#middle{
+	height:100%;
+	width:75%;
+	float:left;
+}
+</style>
+
+</head>
+<body background="picture/bj.jpg" style="position:absolute; top:0; left:0; height:100%;width:100%;background-repeat:no-repeat;background-attachment:fixed; 
+background-size: cover; " onload="getMoney();getname();">
+	
+	<div id="container">
+			<div id="header">
+				<nav class="navbar navbar-inverse navbar-fixed-top">
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="home.html" style="font-size:20px">Shrewd-Investments</a></li>
+							<li ><a href="NowList.html" style="font-size:20px">Nowlist</a></li>
+							<li><a href="hyAnalyze.html" style="font-size:20px">Analyze</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">Recomment<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="recommentsha.html">For Shanghai A</a></li>
+									<li class="divider"></li>
+									<li><a href="recommentshb.html">For Shanghai B</a></li>
+									<li class="divider"></li>
+									<li><a href="recommentsza.html">For Shenzhen A</a></li>
+									<li class="divider"></li>
+									<li><a href="recommentszb.html">For Shenzhen B</a></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size:20px">About<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a data-toggle="modal"
+										   data-target="#AboutOne">About Us</a></li>
+									<li class="divider"></li>
+									<li><a data-toggle="modal"
+										   data-target="#AboutTwo">Contact Us</a></li>
+								</ul>
+							</li>
+							<li><a href="home.html" style="font-size:20px">to be continued</a></li>
+						</ul>
+						<ul class="nav navbar-nav" style="float: right;font-size:20px;height: 50px;">
+							<li>
+								<div id="scbar_background">
+									<form>
+										<input type="text" id="scbar_text" placeholder="搜索您想要的股票或指数代码">
+										<input type="button" id="scbar_button" value=" ">
+									</form>
+								</div>
+							</li>
+							<li class="dropdown pull-right">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size:20px"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="userServlet"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+									<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
+									<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</nav>
+				<!-- 模态框（Modal） -->
+				<div class="modal fade" id="AboutOne" tabindex="-1" role="dialog"
+					 aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close"
+										data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h3><strong class="modal-title" style="font-size:20px">About Us</strong></h3>
+							</div>
+							<div class="modal-body">
+								<p style="text-indent:2em;font-size:20px;">Shrewd-Investments Company是一家致力于提供金融信息综合服务的有限公司（筹备）。
+									公司在计算机和互联网科技不断发展的背景下，立足快速发展的中国金融市场，通过持续的产品创新和技术创新，凭借权威、全面、专业、及时的优势，正蓬勃发展。在开拓中国市场的同时，积极实施国际化发展战略，
+									以期成为在世界范围内具有影响力的金融信息综合服务提供商。
+								</p>
+							</div>
+						</div><!-- /.modal-content -->
+					</div>
+				</div>
+				<!-- /.modal -->
+				<!-- 模态框（Modal） -->
+				<div class="modal fade" id="AboutTwo" tabindex="-1" role="dialog"
+					 aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close"
+										data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h3><strong class="modal-title" style="font-size:20px">Contact Us</strong></h3>
+							</div>
+							<div class="modal-body" style="font-size:20px">
+								<address>
+									<strong>Shrewd-Investments Company, Inc.</strong><br>
+									No. 22,Hankou Road, Nanjing City.
+								</address>
+								<address>
+									<strong>NanJing University · Software Instityte</strong><br>
+									<a href="mailto:#">software@mail.nju.edu.cn</a>
+								</address>
+							</div>
+						</div><!-- /.modal-content -->
+					</div>
+				</div>
+				<!-- /.modal -->
+				<!-- 模态框（Modal） -->
+				<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" 
+				   aria-labelledby="myModalLabel" aria-hidden="true">
+				   <div class="modal-dialog">
+				      <div class="modal-content">
+				         <div class="modal-header">
+				            <button type="button" class="close" data-dismiss="modal" 
+				               aria-hidden="true">×
+				            </button>
+				            <h4 class="modal-title" id="myModalLabel">
+				               	修改密码
+				            </h4>
+				         </div>
+				         <div class="modal-body">
+				         	<form class="form-horizontal" role="form">
+				         			<!-- 模态框里的 -->
+								   <div class="form-group">
+								      <label for="oldpassword" class="col-sm-2 control-label">旧密码</label>
+								      <div class="col-sm-10">
+								         <input type="text" class="form-control" id="oldpassword"
+								            placeholder="请输入旧密码">
+								      </div>
+								   </div>
+								   <div class="form-group">
+								      <label for="newpassword" class="col-sm-2 control-label">新密码</label>
+								      <div class="col-sm-10">
+								         <input type="text" class="form-control" id="newpassword"
+								            placeholder="请输入新密码">
+								      </div>
+								   </div>
+								   <div class="form-group">
+								      <label for="chongfupassword" class="col-sm-2 control-label">重复新密码</label>
+								      <div class="col-sm-10">
+								         <input type="text" class="form-control" id="chongfupassword"
+								            placeholder="请再输入一次新密码">
+								      </div>
+								   </div>
+								</form>
+				         </div>
+				         <div class="modal-footer">
+				            <button type="button" class="btn btn-default" 
+				               data-dismiss="modal">取消
+				            </button>
+				            <button type="button" class="btn btn-primary">
+				               提交更改
+				            </button>
+				         </div>
+				      </div><!-- /.modal-content -->
+				   </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+<br>
+<br>
+<br>
+	</div>
+		
+			<div id="main">
+				<div id="left">
+					<!--
+					<div class="navbar navbar-duomi navbar-static-top" role="navigation">
+						 <div class="container-fluid">
+							  <div class="navbar-header">
+									<a class="navbar-brand" href="user.html" id="logo">用户中心
+									</a>
+									<a  class="navbar-brand" href="user.html" id="logo">Shrewd-Investments
+									</a>
+							 </div>
+						</div>
+					</div>
+					 -->
+					 <div style="width:180px;heigh:180px; border-radius:50%; overflow:hidden;position: relative;left: 50px;"><img src="picture/touxiang.jpg"></div>
+					 <div style="width:100%;font-size:28px;font-weight:900;font-family:Microsoft YaHei;text-align: center;"><strong><span id="username" style="right;"></span></strong></div>
+					<div class="container-fluid" >
+						 <div class="row">
+								  <ul id="main-nav" class="nav nav-tabs nav-stacked" style="">
+									<li class="active">
+										 <a  align="center">
+											<i class="glyphicon glyphicon-th-large"></i>
+												首页
+										</a>
+									</li>
+									 <li>
+										 <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse" align="center">
+											 <i class="glyphicon glyphicon-cog"></i>
+												  个人信息
+											<span class="pull-right glyphicon glyphicon-chevron-down"></span>
+										 </a>
+										 <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
+											<li><a href="###"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>
+											<li><a data-toggle="modal" data-target="#changePassword"><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
+											<li><a href="###"><i class="glyphicon glyphicon-eye-open"></i>日志查看</a></li>
+										 </ul>
+									 </li>
+
+									<li>
+									   <a href="###" align="center">
+									   <i class="glyphicon glyphicon-fire"></i>
+												关于系统
+									 </a>
+									</li>
+
+							</ul>
+						  </div>
+					 </div>
+				</div>
+				<div id="middle">
+					<!-- 第一行   相关资产 -->
+					<div class="row">
+						<!-- 现有总资产 -->
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+							<div class="panel bk-widget bk-border-off">
+								<div class="panel-body bk-bg-very-light-gray">
+									<h4 class="bk-margin-off-bottom bk-docs-font-weight-300" style="font-weight:bold;">总资产</h4>
+									<div class="clearfix  bk-padding-top-10">
+										<div class="pull-right bk-margin-left-15">
+											<i class="fa fa-cny fa-3x" style="padding-top: 18px !important;">
+											</i>
+										</div>
+										<h1 class="bk-margin-off-top pull-right" id="totalMoney"></h1>
+									</div>
+									<a><h6 class="text-right bk-padding-top-20 bk-margin-off">Withdraw</h6></a>
+								</div>
+							</div>
+						</div>
+
+						<!-- 已注入的资产 -->
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+							<div class="panel bk-widget bk-border-off">
+								<div class="panel-body bk-bg-very-light-gray">
+									<h4 class="bk-margin-off-bottom bk-docs-font-weight-300" style="font-weight:bold;">已投资产</h4>
+									<div class="clearfix  bk-padding-top-10">
+										<div class="pull-right bk-margin-left-15">
+											<i class="fa fa-cny fa-3x" style="padding-top: 18px !important;">
+											</i>
+										</div>
+										<h1 class="bk-margin-off-top pull-right" id="yitouMoney"></h1>
+									</div>
+									<a><h6 class="text-right bk-padding-top-20 bk-margin-off">Withdraw</h6></a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+							<div class="panel bk-widget bk-border-off">
+								<div class="panel-body bk-bg-very-light-gray" style="height: 170px">
+									<h4 class="bk-margin-off-bottom bk-docs-font-weight-300" style="font-weight:bold;">修改资产</h4>
+									<form class="form-horizontal " role="form" accept-charset="utf-8" action="userInput" method="post">
+										   <div class="form-group">
+										      <div class="col-sm-12">
+										         <input type="text" class="form-control" id="gupiaocode" name="gupiaocode"
+										            placeholder="请输入股票编号">
+										      </div>
+										   </div>
+										   <div class="form-group">
+										      <div class="col-sm-12">
+										         <input type="text" class="form-control" id="touzi" name="touzi"
+										            placeholder="请输入投资金额">
+										      </div>
+										   </div>
+										   <div class="form-group">
+										      <div class="col-sm-offset-5 " >
+										         <button type="submit" class="btn btn-default" onclick="getMoney();">确定</button>
+										      </div>
+										   </div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 第二行   相关图表  -->
+					<div class="row">
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body">
+										<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+											<div class="tabs tabs-bottom tabs-primary bk-margin-bottom-15 bk-margin-top-15">
+												<div class="tab-content bk-bg-very-light-gray">
+													<div id="profit" class="tab-pane active">
+														<div class="row">
+															<div id="earnLine" style="width:636px;height:227px;"></div>
+														</div>
+
+													</div>
+													<div id="widget" class="tab-pane">
+														<div class="row">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+																<div class="panel bk-widget bk-border-off">
+																	<div class="bk-bg-white  bk-border-very-light-gray bk-fg-danger bk-ltr bk-padding-15 bk-radius">
+																		<div class="row">
+																			<div class="col-xs-4 text-left bk-vcenter bk-padding-off">
+																				<span class="bk-round bk-icon bk-icon-2x bk-bg-danger bk-border-off">
+																					<i class="fa fa-users fa-2x"></i>
+																				</span>
+																			</div>
+																			<div class="col-xs-8 text-left bk-vcenter">
+																				<h6 class="bk-margin-off">TOTAL USERS</h6>
+																				<strong class="bk-margin-off">326,269</strong>
+																			</div>
+																		</div>
+																		<div class="progress light progress-striped active bk-margin-off-bottom bk-margin-top-10 bk-noradius" style="height: 6px;">
+																			<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+																				<span class="sr-only">90% Complete</span>
+																			</div>
+																		</div>
+																		<div class="bk-margin-top-10">
+																			<div class="row">
+																				<div class="col-xs-6">
+																					<small>Monthly: 6,269</small>
+																				</div>
+																				<div class="col-xs-6 text-right">
+																					<a href="#" class="bk-fg-danger bk-fg-darken"><small>View details</small> <i class="fa fa-database"></i></a>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+																<div class="panel bk-widget bk-border-off">
+																	<div class="bk-bg-white bk-border-very-light-gray bk-fg-success bk-ltr bk-padding-15 bk-radius">
+																		<div class="row">
+																			<div class="col-xs-4 text-left bk-vcenter bk-padding-off">
+																				<span class="bk-round bk-border-off bk-icon bk-icon-2x bk-bg-success">
+																					<i class="fa fa-download fa-2x"></i>
+																				</span>
+																			</div>
+																			<div class="col-xs-8 text-left bk-vcenter">
+																				<h6 class="bk-margin-off">DOWNLOAD</h6>
+																				<strong class="bk-margin-off">1,256</strong>
+																			</div>
+																		</div>
+																		<div class="progress light progress-striped active bk-margin-off-bottom bk-margin-top-10 bk-noradius" style="height: 6px;">
+																			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+																				<span class="sr-only">80% Complete</span>
+																			</div>
+																		</div>
+																		<div class="bk-margin-top-10">
+																			<div class="row">
+																				<div class="col-xs-6">
+																					<small>Stock: 32,269</small>
+																				</div>
+																				<div class="col-xs-6 text-right">
+																					<a href="#" class="bk-fg-success bk-fg-darken"><small>View details</small> <i class="fa fa-database"></i></a>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+																<div class="panel bk-widget bk-border-off">
+																	<div class="bk-bg-white  bk-border-very-light-gray bk-fg-warning bk-ltr bk-padding-15 bk-radius">
+																		<div class="row">
+																			<div class="col-xs-4 text-left bk-vcenter bk-padding-off">
+																				<span class="bk-round bk-border-off bk-icon bk-icon-2x bk-bg-warning">
+																					<i class="fa fa-shopping-cart fa-2x"></i>
+																				</span>
+																			</div>
+																			<div class="col-xs-8 text-left bk-vcenter">
+																				<h6 class="bk-margin-off">PURCHASE</h6>
+																				<strong class="bk-margin-off">$526,369</strong>
+																			</div>
+																		</div>
+																		<div class="progress light progress-striped active bk-margin-off-bottom bk-margin-top-10 bk-noradius" style="height: 6px;">
+																			<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+																				<span class="sr-only">80% Complete</span>
+																			</div>
+																		</div>
+																		<div class="bk-margin-top-10">
+																			<div class="row">
+																				<div class="col-xs-6">
+																					<small>Top day: 11/25/2014</small>
+																				</div>
+																				<div class="col-xs-6 text-right">
+																					<a href="#" class="bk-fg-warning bk-fg-darken"><small>View details</small> <i class="fa fa-database"></i></a>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="text-center" style="height:106px;">
+
+														</div>
+													</div>
+												</div>
+												<ul class="nav nav-tabs nav-right">
+													<li class="active">
+														<a href="#profit" data-toggle="tab"> Profit</a>
+													</li>
+													<li class="">
+														<a href="#widget" data-toggle="tab"> Widget Update</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+
+										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+											<div class="text-center bk-margin-bottom-15 bk-margin-top-15">
+												<div id="earnPie" style="width:370px;height:300px;"></div>
+											</div>
+											<h4 class="text-center">Monthly Sales</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					<!-- 第三行   相关自选股信息 -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+									<div class="panel-body">
+									  	<div style="text-align:center;font-size:30px;color:#000033;">
+                          		 自选股
+                       				 	</div>
+                        				<div class="row">
+                           					<!-- 这条分割线到时候再换 -->
+                            				<HR style="border:1px double #987cb9" width="80%" color=#987cb9 SIZE=3>
+                      					</div>
+										<table cellpadding="0" cellspacing="0" border="0"  class="display"  id="sha" >
+											<thead>
+													<th>股票代码</th>
+													<th>股票名称</th>
+													<th>行业名称</th>
+													<th>开盘价</th>
+													<th>昨收</th>
+													<th>当前价格</th>
+													<th>涨跌幅</th>
+													<th>当前持有</th>
+													<th>初始投入</th>
+													<th>初始投资设定日期</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="foot">
+				<HR style="border:1px dashed #987cb9" width="80%" color=#987cb9  SIZE=1>
+				<div class="container pb-lg">
+					<div class="col-md-4">
+						<address style="font-size:20px">
+							<strong>Shrewd-Investments Company, Inc.</strong><br>
+							No. 22,Hankou Road, Nanjing City.
+						</address>
+					</div>
+					<div class="col-md-4" >
+						<address style="font-size:20px">
+							<strong>NanJing University · Software Instityte</strong><br>
+							<a href="mailto:#">software@mail.nju.edu.cn</a>
+						</address>
+					</div>
+					<div class="col-md-4" >
+						<address style="font-size:20px">
+							<strong>Copyright@Shrewd-Investments 2016-2026</strong><br>
+						</address>
+					</div>
+				</div>
+			</div>
+	</div>
+	
+		<div class="toolbar">
+		<a href="javascript:;" class="toolbar-item toolbar-item-weixin">
+			<span class="toolbar-layer"></span>
+		</a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-feedback"></a>
+		<a href="javascript:;" class="toolbar-item toolbar-item-app">
+			<span class="toolbar-layer"></span>
+		</a>
+		
+	</div>
+		
+	<!-- earnLine的JS -->
+	<script type="text/javascript">
+		$.ajax({
+			url: "http://localhost:8080/web/userEarnLine",
+			type: "GET",
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function (data){
+				var JSONdata = eval(data);
+				var myChart = echarts.init(document.getElementById('earnLine'));
+				//get JSON 数据
+				//var JSONdata=[{'date':'2015-05-01','b':10000},{'date':'2015-05-02','b':20000},{'date':'2015-05-03','b':40000},{'date':'2015-05-04','b':30000},{'date':'2015-05-05','b':40000}];
+				var getdate=[];
+				var getmoney=[];
+				for (var i=0;i<JSONdata.length;i++){
+					getdate[i]=JSONdata[i].date;
+					getmoney[i]=JSONdata[i].b;
+				}
+				var option = {
+					    title: {
+					        text: '收益详情',
+					    },
+					    tooltip: {
+					        trigger: 'axis'
+					    },
+					    legend: {
+					        data:['收益金额']
+					    },
+					    toolbox: {
+					        show: true,
+					        feature: {
+					            dataZoom: {show: true},
+					            dataView: {readOnly: false},
+					            magicType: {type: ['line', 'bar']},
+					            restore: {},
+					            saveAsImage: {}
+					        }
+					    },
+						dataZoom : {
+							show : true,
+							realtime : true,
+							start : 20,
+							end : 80
+						},
+					    xAxis:  {
+					        type: 'category',
+					        boundaryGap: false,
+					        data: getdate
+					    },
+					    yAxis: {
+					        type: 'value',
+					        axisLabel: {
+					            formatter: '{value} ￥'
+					        }
+					    },
+					    series: [
+					        {
+					            name:'收益金额',
+					            type:'line',
+					            data:getmoney,
+					            markPoint: {
+					                data: [
+					                    {type: 'max', name: '最大值'},
+					                    {type: 'min', name: '最小值'}
+					                ]
+					            },
+					            markLine: {
+					                data: [
+					                    {type: 'average', name: '平均值'}
+					                ]
+					            }
+					        }
+					    ]
+					};
+				
+				myChart.setOption(option);
+			}
+		});
+	</script>
+
+	<!-- earnPie的JS -->
+	<script type="text/javascript">
+		$.ajax({
+			url: "http://localhost:8080/web/userHy",
+			type: "GET",
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function (data){
+				var chartdata = eval(data);
+				var myChart = echarts.init(document.getElementById('earnPie'));
+				//get JSON 数据
+				//var chartdata=[{value:600,name:'金属材料'},{value:400,name:'机械仪表'},{value:500,name:'电子'},{value:800,name:'综合类'},{value:1000,name:'文化传播'},
+				    //{value:1200,name:'生物医药'}, {value:500,name:'石油化工'},{value:300,name:'纺织服装'},{value:400,name:'造纸印刷'},{value:300,name:'食品饮料'}];
+
+				var option = {
+					    backgroundColor: '#ffffff',  /* 这里是改 背景颜色的*/
+					    title: {
+					        text: '行业注资',
+					        top: 0,
+					        textStyle: {
+					            color: '#000'
+					        }
+					    },
+
+					    tooltip : {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b} : {c}万元 ({d}%)"
+					    },
+
+
+					    series : [
+					        {
+					            name:'行业注资',
+					            type:'pie',
+					            radius :['15%','70%'],
+					            center: ['50%', '50%'],
+					            data:chartdata.sort(function (a, b) { return a.value - b.value}),
+					            roseType: 'area',
+					            label: {
+					                normal: {
+					                    textStyle: {
+					                        color: 'rgba(255, 0, 0, 1)'
+					                    },
+					                },
+					            },
+					            labelLine: {
+					                normal: {
+					                    lineStyle: {
+					                        color: 'rgba(0, 0, 0, 1)'
+					                    },
+					                    smooth: 0.2,
+					                    length: 10,
+					                    length2: 20
+					                }
+					            },
+					            itemStyle: {
+					                normal: {
+					                    color: '#c23531',
+					                    shadowBlur: 100,
+					                    shadowColor: 'rgba(0, 0, 0, 1)'
+					                }
+					            }
+					        }
+					    ]
+				};
+				
+				myChart.setOption(option);
+			}
+		});
+	</script>
+	
+	<script type="text/javascript">
+	var shadata = [
+	     	      {
+	     	    	  "股票代码":  "60001",
+	     	    	  "股票名称":  "kl",
+	     	    	  "行业名称":  "sa",
+	     	    	  "开盘价":  "10",
+	     	    	  "昨收":  "11",
+	     	    	  "当前价格":  "14",
+	     	    	  "涨跌幅":  "15",
+	     	    	  "当前持有":  "16",
+	     	    	  "初始投入":  "17",
+	     	    	  "初始投资设定日期":  "13:00:00",
+	     	      }
+	     	]	
+	     $(document).ready(function(){
+	    	 $.ajax({
+	    			"url": "http://localhost:8080/web/userZixuan",
+	    			"type":"GET",
+	    			"dataType":"json",
+	    	        "contentType": "application/json; charset=utf-8",
+	    	        "success": function(data){
+	    	        	//var temp = eval(data);
+	    	        	//var temp1="[";
+	    	        	//var length = temp.length;
+	    	        	//for(var i = 0 ; i < length;i++){
+	    	        	//	var temp2 = "[ '"+temp[i].股票代码+"','"+
+	    	        	//	                  temp[i].股票名称+"','"+
+	    	        	//	                  temp[i].行业名称+"','"+
+	    	        	//	                  temp[i].开盘价+"','"+
+	    	        	//	                  temp[i].昨收+"','"+
+	    	        	//	                  temp[i].当前价格+"','"+
+	    	        	//	                  temp[i].涨跌幅+"','"+
+	    	        	//	                  temp[i].当前持有+"','"+
+	    	        	//	                  temp[i].初始投入+"','"+
+	    	        	//	                  temp[i].初始投资设定日期+"'],";
+	    	        	//	temp1 = temp1+temp2;
+	    	        //	}
+	    	        	//temp1 = temp1+"]";
+	    	        	//alert(temp1);
+	    	     	    $('#sha').dataTable({
+	    	     	    	data:data,
+	    	     	    	columns:[
+	    	     	    	    {data: '股票代码'},
+	    	     	    	    {data: '股票名称'},
+	    	     	    	    {data: '行业名称'},
+	    	     	    	    {data: '开盘价'},
+	    	     	    	    {data: '昨收'},
+	    	     	    	    {data: '当前价格'},
+	    	     	    	    {data: '涨跌幅'},
+	    	     	    	    {data: '当前持有'},
+	    	     	    	    {data: '初始投入'},
+	    	     	    	    {data: '初始投资设定日期'},
+	    	     	    ],
+	    	     	    "sPaginationType": "full_numbers",
+	    	     	    "createdRow":function(row,data,index){
+	    	     	    	//alert(data.涨跌幅);
+	    	     	    	if(data.涨跌幅<0){
+	    	     	    		$('td',row).eq(6).css("color","green");
+	    	     	    	}else{
+	    	     	    		$('td',row).eq(6).css("color","red");
+	    	     	    	}
+	    	     	    	if(data.开盘价<data.昨收){
+	    	     	    		$('td',row).eq(3).css("color","green");
+	    	     	    	}else{
+	    	     	    		$('td',row).eq(3).css("color","red");
+	    	     	    	}
+	    	     	    	if(data.当前价格<data.昨收){
+	    	     	    		$('td',row).eq(5).css("color","green");
+	    	     	    	}else{
+	    	     	    		$('td',row).eq(5).css("color","red");
+	    	     	    	}
+	    	     	    },
+	    	     	   "aLengthMenu":[15],
+	    	     		  "oLanguage": {
+	    	     	          "sProcessing": "正在加载中......",
+	    	     	          "sLengthMenu": "每页显示 _MENU_ 条记录",
+	    	     	          "sZeroRecords": "对不起，查询不到相关数据！",
+	    	     	          "sEmptyTable": "表中无数据存在！",
+	    	     	          "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+	    	     	          "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+	    	     	          "sSearch": "搜索",
+	    	     	          "oPaginate": {
+	    	     	              "sFirst": "首页",
+	    	     	              "sPrevious": "上一页",
+	    	     	              "sNext": "下一页",
+	    	     	              "sLast": "末页"
+	    	     	          }
+	    	     	      } //多语言配置
+	    	     	    }); 
+	    	     	    /* Add events  这里把参数传递进去了 跳转到另外一个html页面 数据可能会存在sees里*/ 
+	    	     		$('#sha tbody tr').on('click', function () {
+	    	     			var sTitle;
+	    	     			var nTds = $('td', this);
+	    					var code = $(nTds[0]).text();
+	    					window.location.href="http://localhost:8080/web/oneStock.html?code="+code;
+	    	     			//alert( sBrowser+"  "+sGrade );
+	    	     		 });
+	    	        }
+	    		 
+	    	 });
+	     	  });
+	</script>
+	<script type="text/javascript">
+	function getMoney(){
+		$.ajax({
+			"url": "http://localhost:8080/web/userLabel",
+			"type":"GET",
+			"dataType":"json",
+	        "contentType": "application/json; charset=utf-8",
+	        "success": function(data){
+	        	var total = data.total;
+	        	var yitou = data.yitou;
+	        	document.getElementById("totalMoney").innerText=total;
+	        	document.getElementById("yitouMoney").innerText=yitou;
+	        }
+		});
+	}
+	</script>
+	<script type="text/javascript">
+	function getname(){
+		var reg = new RegExp("(^|&)name=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		var name=unescape(r[2]);
+		document.getElementById("username").innerText=name;
+	}
+	</script>
+		<script type="text/javascript">
+			$('#scbar_button').click(function(){
+				//alert($("#scbar_text").val());
+				var scbartext=$("#scbar_text").val();
+				$.ajax({
+					url: "http://localhost:8080/web/search",
+					type:"GET",
+					async: false,
+					data:{code:scbartext},
+			        success: function(data){
+			        	if(data=="fail"){
+			        		document.getElementById("scbar_text").value="";
+			        		document.getElementById("scbar_text").setAttribute("placeholder", "您所输入的编号或名称不正确");
+			        	}else if(data=="succMarket"){
+			        		window.location.href="/web/oneMarket.html?code="+scbartext;
+			        	}else{
+			        		window.location.href="/web/oneStock.html?code="+scbartext;
+			        	}
+			        }
+				});
+			});
+
+	</script>
+</body>
+</html>
